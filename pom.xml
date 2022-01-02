@@ -31,7 +31,7 @@
       <testcontainers.version>1.15.1</testcontainers.version>
    </properties>
 
-   <groupId>com.zaxxer</groupId>
+   <groupId>com.alpha-prosoft</groupId>
    <artifactId>hikaricp</artifactId>
    <version>5.0.1-SNAPSHOT</version>
    <packaging>bundle</packaging>
