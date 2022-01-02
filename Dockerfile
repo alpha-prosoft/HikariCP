@@ -4,7 +4,7 @@ ARG DOCKER_ORG
 FROM ${DOCKER_URL}/${DOCKER_ORG}/common-img:latest
 
 # Custom build from here on
-ENV PROJECT_NAME HikariCP
+ENV PROJECT_NAME hikaricp
 
 COPY --chown=build:build src src
 COPY --chown=build:build pom.xml pom.xml
