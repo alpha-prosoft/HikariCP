@@ -18,7 +18,7 @@ RUN set -e &&\
     mvn versions:commit &&\
     mvn clean package -DskipTests &&\
     cp pom.xml /dist/release-libs/${PROJECT_NAME}-5.0.${BUILD_ID}.jar.pom.xml &&\
-    cp target/${PROJECT_NAME}-5.0.1-${BUILD_ID}.jar /dist/release-libs/${PROJECT_NAME}-5.0.${BUILD_ID}.jar &&\
+    cp target/${PROJECT_NAME}-5.0.${BUILD_ID}.jar /dist/release-libs/${PROJECT_NAME}-5.0.${BUILD_ID}.jar &&\
     ls -la target &&\
     rm -rf ~/.m2/repository
 
