@@ -16,14 +16,10 @@
 
 package com.zaxxer.hikari.pool;
 
-import com.codahale.metrics.MetricRegistry;
-import com.codahale.metrics.health.HealthCheckRegistry;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariPoolMXBean;
 import com.zaxxer.hikari.metrics.MetricsTrackerFactory;
 import com.zaxxer.hikari.metrics.PoolStats;
-import com.zaxxer.hikari.metrics.dropwizard.CodahaleHealthChecker;
-import com.zaxxer.hikari.metrics.dropwizard.CodahaleMetricsTrackerFactory;
 import com.zaxxer.hikari.metrics.micrometer.MicrometerMetricsTrackerFactory;
 import com.zaxxer.hikari.util.ConcurrentBag;
 import com.zaxxer.hikari.util.ConcurrentBag.IBagStateListener;
@@ -278,15 +274,7 @@ public final class HikariPool extends PoolBase implements HikariPoolMXBean, IBag
    @SuppressWarnings("PackageAccessibility")
    public void setMetricRegistry(Object metricRegistry)
    {
-      if (metricRegistry != null && safeIsAssignableFrom(metricRegistry, "com.codahale.metrics.MetricRegistry")) {
-         setMetricsTrackerFactory(new CodahaleMetricsTrackerFactory((MetricRegistry) metricRegistry));
-      }
-      else if (metricRegistry != null && safeIsAssignableFrom(metricRegistry, "io.micrometer.core.instrument.MeterRegistry")) {
-         setMetricsTrackerFactory(new MicrometerMetricsTrackerFactory((MeterRegistry) metricRegistry));
-      }
-      else {
-         setMetricsTrackerFactory(null);
-      }
+	   setMetricsTrackerFactory(null);
    }
 
    /**
@@ -312,9 +300,7 @@ public final class HikariPool extends PoolBase implements HikariPoolMXBean, IBag
     */
    public void setHealthCheckRegistry(Object healthCheckRegistry)
    {
-      if (healthCheckRegistry != null) {
-         CodahaleHealthChecker.registerHealthChecks(this, config, (HealthCheckRegistry) healthCheckRegistry);
-      }
+    
    }
 
    // ***********************************************************************

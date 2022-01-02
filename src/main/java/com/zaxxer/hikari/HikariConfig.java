@@ -16,7 +16,6 @@
 
 package com.zaxxer.hikari;
 
-import com.codahale.metrics.health.HealthCheckRegistry;
 import com.zaxxer.hikari.metrics.MetricsTrackerFactory;
 import com.zaxxer.hikari.util.PropertyElf;
 import org.slf4j.Logger;
@@ -696,10 +695,6 @@ public class HikariConfig implements HikariConfigMXBean
 
       if (healthCheckRegistry != null) {
          healthCheckRegistry = getObjectOrPerformJndiLookup(healthCheckRegistry);
-
-         if (!(healthCheckRegistry instanceof HealthCheckRegistry)) {
-            throw new IllegalArgumentException("Class must be an instance of com.codahale.metrics.health.HealthCheckRegistry");
-         }
       }
 
       this.healthCheckRegistry = healthCheckRegistry;
