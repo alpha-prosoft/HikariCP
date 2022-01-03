@@ -104,7 +104,7 @@ public class ConcurrentBag<T extends IConcurrentBagEntry> implements AutoCloseab
          this.threadList = ThreadLocal.withInitial(() -> new ArrayList<>(16));
       }
       else {
-         this.threadList = ThreadLocal.withInitial(() -> new FastList<>(IConcurrentBagEntry.class, 16));
+         this.threadList = ThreadLocal.withInitial(() -> new FastList<>(Object.class, 16));
       }
    }
 
