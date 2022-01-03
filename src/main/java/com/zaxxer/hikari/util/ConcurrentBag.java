@@ -104,7 +104,7 @@ public class ConcurrentBag<T extends IConcurrentBagEntry> implements AutoCloseab
          this.threadList = ThreadLocal.withInitial(() -> new ArrayList<>(16));
       }
       else {
-         this.threadList = ThreadLocal.withInitial(() -> new FastList<>(Object.class, 16));
+         this.threadList = ThreadLocal.withInitial(() -> new FastList<>((c) -> new IConcurrentBagEntry[c], 16));
       }
    }
 
@@ -380,6 +380,15 @@ public class ConcurrentBag<T extends IConcurrentBagEntry> implements AutoCloseab
     */
    private boolean useWeakThreadLocals()
    {
-      return false;
+      try {
+         if (System.getProperty("com.zaxxer.hikari.useWeakReferences") != null) {   // undocumented manual override of WeakReference behavior
+            return Boolean.getBoolean("com.zaxxer.hikari.useWeakReferences");
+         }
+
+         return getClass().getClassLoader() != ClassLoader.getSystemClassLoader();
+      }
+      catch (SecurityException se) {
+         return true;
+      }
    }
 }

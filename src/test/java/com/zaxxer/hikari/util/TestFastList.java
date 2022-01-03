@@ -36,7 +36,7 @@ public class TestFastList
     {
         ArrayList<Statement> verifyList = new ArrayList<>();
 
-        FastList<Statement> list = new FastList<>(Statement.class);
+        FastList<Statement> list = new FastList<>((c) -> new Statement[c]);
         for (int i = 0; i < 32; i++)
         {
             StubStatement statement = new StubStatement(null);
@@ -58,7 +58,7 @@ public class TestFastList
     {
         ArrayList<Statement> verifyList = new ArrayList<>();
 
-        FastList<Statement> list = new FastList<>(Statement.class);
+        FastList<Statement> list = new FastList<>((c) -> new Statement[c]);
         for (int i = 0; i < 32; i++)
         {
             StubStatement statement = new StubStatement(null);
@@ -80,7 +80,7 @@ public class TestFastList
     {
         ArrayList<Statement> verifyList = new ArrayList<>();
 
-        FastList<Statement> list = new FastList<>(Statement.class);
+        FastList<Statement> list = new FastList<>((c) -> new Statement[c]);
         for (int i = 0; i < 100; i++)
         {
             StubStatement statement = new StubStatement(null);
@@ -98,7 +98,7 @@ public class TestFastList
     @Test
     public void testIterator()
     {
-       FastList<Statement> list = new FastList<>(Statement.class);
+       FastList<Statement> list = new FastList<>((c) -> new Statement[c]);
        for (int i = 0; i < 100; i++)
        {
            StubStatement statement = new StubStatement(null);
@@ -114,7 +114,7 @@ public class TestFastList
     @Test
     public void testClear()
     {
-       FastList<Statement> list = new FastList<>(Statement.class);
+       FastList<Statement> list = new FastList<>((c) -> new Statement[c]);
        for (int i = 0; i < 100; i++)
        {
            StubStatement statement = new StubStatement(null);
@@ -133,7 +133,7 @@ public class TestFastList
     @Test
     public void testRemoveLast()
     {
-       FastList<Statement> list = new FastList<>(Statement.class);
+       FastList<Statement> list = new FastList<>((c) -> new Statement[c]);
 
        Statement last = null;
        for (int i = 0; i < 100; i++)
@@ -158,7 +158,7 @@ public class TestFastList
 
        }
 
-       FastList<Base> list = new FastList<>(Base.class, 2);
+       FastList<Base> list = new FastList<>((c) -> new Base[c], 2);
        list.add(new Foo());
        list.add(new Foo());
        list.add(new Bar());

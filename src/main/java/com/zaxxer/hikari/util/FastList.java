@@ -17,7 +17,6 @@
 package com.zaxxer.hikari.util;
 
 import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -27,6 +26,7 @@ import java.util.NoSuchElementException;
 import java.util.RandomAccess;
 import java.util.Spliterator;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
 
@@ -35,12 +35,11 @@ import java.util.function.UnaryOperator;
  *
  * @author Brett Wooldridge
  */
-@SuppressWarnings("NullableProblems")
 public final class FastList<T> implements List<T>, RandomAccess, Serializable
 {
    private static final long serialVersionUID = -4598088075242913858L;
 
-   private final Class<?> clazz;
+   Function<Integer, T[]> elementDataCreator;
    private T[] elementData;
    private int size;
 
@@ -48,11 +47,10 @@ public final class FastList<T> implements List<T>, RandomAccess, Serializable
     * Construct a FastList with a default size of 32.
     * @param clazz the Class stored in the collection
     */
-   @SuppressWarnings("unchecked")
-   public FastList(Class<?> clazz)
+   public FastList(Function<Integer, T[]> elementDataCreator)
    {
-      this.elementData = (T[]) Array.newInstance(clazz, 32);
-      this.clazz = clazz;
+	  this.elementDataCreator = elementDataCreator;
+      this.elementData = elementDataCreator.apply(32);
    }
 
    /**
@@ -60,11 +58,10 @@ public final class FastList<T> implements List<T>, RandomAccess, Serializable
     * @param clazz the Class stored in the collection
     * @param capacity the initial size of the FastList
     */
-   @SuppressWarnings("unchecked")
-   public FastList(Class<?> clazz, int capacity)
+   public FastList(Function<Integer, T[]> elementDataCreator, int capacity)
    {
-      this.elementData = (T[]) Array.newInstance(clazz, capacity);
-      this.clazz = clazz;
+	  this.elementDataCreator = elementDataCreator;
+      this.elementData = elementDataCreator.apply(capacity);
    }
 
    /**
@@ -82,8 +79,7 @@ public final class FastList<T> implements List<T>, RandomAccess, Serializable
          // overflow-conscious code
          final var oldCapacity = elementData.length;
          final var newCapacity = oldCapacity << 1;
-         @SuppressWarnings("unchecked")
-         final var newElementData = (T[]) Array.newInstance(clazz, newCapacity);
+         final var newElementData = elementDataCreator.apply(newCapacity);
          System.arraycopy(elementData, 0, newElementData, 0, oldCapacity);
          newElementData[size++] = element;
          elementData = newElementData;
